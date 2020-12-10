@@ -225,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 14801631}
   m_Layer: 0
-  m_Name: Ros
+  m_Name: Ros-Unity integration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -794,7 +794,7 @@ GameObject:
   - component: {fileID: 455560596}
   - component: {fileID: 455560597}
   m_Layer: 0
-  m_Name: Ros Publisher
+  m_Name: Presence Publisher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -823,7 +823,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 455560595}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc86a38ee6b6fec4584f987da8627529, type: 3}
+  m_Script: {fileID: 11500000, guid: 2544aa398aff89e4183f136fe8d49e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ros: {fileID: 649891344}
