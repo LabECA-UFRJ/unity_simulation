@@ -9,7 +9,7 @@ namespace Ros
         
         void Start()
         {
-            ros.Send(topicName, new RosMessageTypes.Std.Int32(0));
+            ros.Send(topicName, new RosMessageTypes.Std.Int32(1));
         }
     }
 }
