@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using RosMessageGeneration;
-using RosMessageTypes.Std;
 
 namespace RosMessageTypes.Simulation
 {
@@ -11,24 +10,24 @@ namespace RosMessageTypes.Simulation
     {
         public const string RosMessageName = "simulation_msgs/PoseRobot";
 
-        public Header header;
+        public int id;
         public Geometry.Pose pose;
 
         public PoseRobot()
         {
-            this.header = new Header();
+            this.id = 0;
             this.pose = new Geometry.Pose();
         }
 
-        public PoseRobot(Header header, Geometry.Pose pose)
+        public PoseRobot(int id, Geometry.Pose pose)
         {
-            this.header = header;
+            this.id = id;
             this.pose = pose;
         }
         public override List<byte[]> SerializationStatements()
         {
             var listOfSerializations = new List<byte[]>();
-            listOfSerializations.AddRange(header.SerializationStatements());
+            listOfSerializations.Add(BitConverter.GetBytes(this.id));
             listOfSerializations.AddRange(pose.SerializationStatements());
 
             return listOfSerializations;
@@ -36,7 +35,8 @@ namespace RosMessageTypes.Simulation
 
         public override int Deserialize(byte[] data, int offset)
         {
-            offset = this.header.Deserialize(data, offset);
+            this.id = BitConverter.ToInt32(data, offset);
+            offset += 4;
             offset = this.pose.Deserialize(data, offset);
 
             return offset;
