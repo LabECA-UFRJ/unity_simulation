@@ -10,6 +10,9 @@ public class RobotMessageSystem : SystemBase
     private string topicName = "robots";
     private string referenceFrame = "global";
 
+    private float _nextUpdate = 0f;
+    private const float _updateTime = 1/60f;
+
     protected override void OnCreate()
     {
         ros = Object.FindObjectOfType<ROSConnection>();
@@ -17,6 +20,14 @@ public class RobotMessageSystem : SystemBase
 
     protected override void OnUpdate()
     {
+
+        if (_nextUpdate > 0) {
+            _nextUpdate -= Time.DeltaTime;
+            return;
+        }
+
+        _nextUpdate = _updateTime;
+
         EntityQuery query = GetEntityQuery(ComponentType.ReadOnly<RobotId>());
 
         int size = query.CalculateEntityCount();
