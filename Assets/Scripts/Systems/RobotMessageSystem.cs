@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Entities;
 using Unity.Transforms;
+
+using ROSGeometry;
 
 public class RobotMessageSystem : SystemBase
 {
@@ -11,7 +11,7 @@ public class RobotMessageSystem : SystemBase
     private string referenceFrame = "global";
 
     private float _nextUpdate = 0f;
-    private const float _updateTime = 1/60f;
+    private const float _updateTime = 1 / 60f;
 
     protected override void OnCreate()
     {
@@ -36,15 +36,18 @@ public class RobotMessageSystem : SystemBase
         var robotsInformation = new RosMessageTypes.Simulation.PoseRobot[size];
 
         Entities.WithoutBurst().ForEach((in RobotId robotId, in Rotation rotation, in Translation translation) => {
-            var robotPos = new RosMessageTypes.Geometry.Point(translation.Value.x, translation.Value.y, translation.Value.z);
-            var robotRot = new RosMessageTypes.Geometry.Quaternion(rotation.Value.value.x, rotation.Value.value.y, rotation.Value.value.z, rotation.Value.value.w);
+            var pos = ((Vector3)translation.Value).To<FLU>();
+            var rot = ((Quaternion)rotation.Value).To<FLU>();
+
+            var robotPos = new RosMessageTypes.Geometry.Point(pos.x, pos.y, pos.z);
+            var robotRot = new RosMessageTypes.Geometry.Quaternion(rot.x, rot.y, rot.z, rot.w);
 
             var robotInfo = new RosMessageTypes.Simulation.PoseRobot(
                 robotId.Value,
                 new RosMessageTypes.Geometry.Pose(robotPos, robotRot)
             );
 
-            if (arrayId < size && arrayId >= 0){
+            if (arrayId < size && arrayId >= 0) {
                 robotsInformation[arrayId] = robotInfo;
                 arrayId++;
             }
@@ -55,7 +58,7 @@ public class RobotMessageSystem : SystemBase
         msgHeader.frame_id = referenceFrame;
 
         var message = new RosMessageTypes.Simulation.PoseRobotArray(msgHeader, robotsInformation);
-  
+
         ros.Send(topicName, message);
     }
 }
