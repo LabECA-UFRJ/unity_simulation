@@ -20,13 +20,12 @@ public class RobotMessageSystem : SystemBase
 
     protected override void OnUpdate()
     {
-
-        if (_nextUpdate > 0) {
-            _nextUpdate -= Time.DeltaTime;
+        _nextUpdate -= Time.DeltaTime;
+        if (_nextUpdate > Time.DeltaTime / 2) {
             return;
         }
 
-        _nextUpdate = _updateTime;
+        _nextUpdate = _updateTime + _nextUpdate;
 
         EntityQuery query = GetEntityQuery(ComponentType.ReadOnly<RobotId>());
 
