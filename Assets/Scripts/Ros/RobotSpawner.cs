@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using System;
+using ROSGeometry;
 
-namespace Ros{
+namespace Ros
+{
     public class RobotSpawner : MonoBehaviour
     {
         public ROSConnection ros;
@@ -18,9 +20,9 @@ namespace Ros{
 
         void SpawnRobot(RosMessageTypes.Simulation.Robot robotMessage)
         {
-            Vector3 position = new Vector3((float)robotMessage.position.x, (float)robotMessage.position.y, (float)robotMessage.position.z);
+            Vector3 position = new Vector3<FLU>((float)robotMessage.position.x, (float)robotMessage.position.y, (float)robotMessage.position.z).toUnity;
 
-            GameObject robot = Instantiate(robotPrefab, position, Quaternion.AngleAxis(robotMessage.rotation, Vector3.up));
+            GameObject robot = Instantiate(robotPrefab, position, Quaternion.AngleAxis(-robotMessage.rotation, Vector3.up));
             robot.GetComponent<RobotIdAuthoring>().id = robotMessage.robot_id;
         }
     }
