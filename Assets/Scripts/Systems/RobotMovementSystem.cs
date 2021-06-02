@@ -19,7 +19,7 @@ public class RobotMovementSystem : SystemBase
             // angular formula is supposed to be (ws_l - ws_r) * r/2l
 
             velocity.Linear = math.rotate(rotation.Value, new float3(0f, 0f, linear));
-            velocity.SetAngularVelocity(mass, rotation, new float3(0f, angular, 0f));
+            velocity.SetAngularVelocityWorldSpace(mass, rotation, new float3(0f, angular, 0f));
         }).ScheduleParallel(Dependency);
     }
 }
