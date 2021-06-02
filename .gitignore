@@ -7,6 +7,7 @@ UnityGenerated/
 Library/
 Assets/AssetStoreTools*
 Logs/
+Recordings/
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
@@ -40,3 +41,8 @@ Thumbs.db
 # ================== #
 [Bb]uild*/
 External Libraries/
+
+# ===== #
+# Rider #
+# ===== #
+.idea/*
