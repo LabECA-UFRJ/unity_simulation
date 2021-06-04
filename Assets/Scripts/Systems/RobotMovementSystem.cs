@@ -15,7 +15,7 @@ public class RobotMovementSystem : SystemBase
             var rightWheelSpeed = math.clamp(wheelSpeed.Right, -1f, 1f) * dynamics.MaxSpeed;
 
             var linear = (leftWheelSpeed + rightWheelSpeed) * dimension.WheelRadius / 2f;
-            var angular = (dimension.WheelRadius / (2 * dimension.BodyRadius)) * (leftWheelSpeed - rightWheelSpeed);
+            var angular = (dimension.WheelRadius / (2f * dimension.BodyRadius)) * (leftWheelSpeed - rightWheelSpeed);
             // angular formula is supposed to be (ws_l - ws_r) * r/2l
 
             velocity.Linear = math.rotate(rotation.Value, new float3(0f, 0f, linear));
