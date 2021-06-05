@@ -11,7 +11,7 @@ public class RobotMessageSystem : SystemBase
     private string referenceFrame = "global";
 
     private float _nextUpdate = 0f;
-    private const float _updateTime = 1 / 60f;
+    private const float _updateTime = 1 / 120f;
 
     protected override void OnCreate()
     {
@@ -53,7 +53,7 @@ public class RobotMessageSystem : SystemBase
         }).Run();
 
         var msgHeader = new RosMessageTypes.Std.Header();
-        msgHeader.stamp = new RosMessageTypes.Std.Time((uint)System.DateTime.Now.Second, (uint)System.DateTime.Now.Millisecond);
+        msgHeader.stamp = new RosMessageTypes.Std.Time((uint)System.DateTime.Now.Second, (uint)System.DateTime.Now.Millisecond / 1000);
         msgHeader.frame_id = referenceFrame;
 
         var message = new RosMessageTypes.Simulation.PoseRobotArray(msgHeader, robotsInformation);
